@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>SVG (Scalable Vector Graphics)</title>
+</head>
+<body>
+  <svg width="720" height="460" viewBox="0 0 362 232">
+    <g fill="black" stroke="gold" stroke-width="2">
+      <rect x="20" y="20" width="210" height="210"/>
+      <rect x="230" y="20" width="130" height="130"/>
+      <rect x="280" y="150" width="80" height="80"/>
+      <rect x="230" y="180" width="50" height="50"/>
+      <rect x="230" y="150" width="30" height="30"/>
+      <rect x="260" y="150" width="20" height="20"/>
+      <rect x="260" y="170" width="10" height="10"/>
+      <rect x="270" y="170" width="10" height="10"/>
+    </g>
+    <g fill="none" stroke="gold" stroke-width="1">
+      <path id="myArc1"/>
+      <path id="myArc2"/>
+      <path id="myArc3"/>
+      <path id="myArc4"/>
+      <path id="myArc5"/>
+      <path id="myArc6"/>
+      <path id="myArc7"/>
+    </g>
+  </svg>
+</body>
+
+<script>
+  // ↓↓ここからコピペ↓↓
+  
+  /**
+   * SVGに円弧(正円)を描画する関数
+   * 
+   * @param {HTMLElement} svg SVGの<path>要素
+   * @param {number} radius 円の半径
+   * @param {number} x0 円の中心のX座標
+   * @param {number} y0 円の中心のY座標
+   * @param {number} startAngle 円弧の始点の角度(X軸方向を0度として度数法で指定)
+   * @param {number} angle 円弧の角度(startAngleからの角度を度数法で指定)
+   **/
+  function drawArc(svg, radius, x0, y0, startAngle, angle) {
+    // 0~360度の範囲になるように補正
+    if (Math.abs(angle) >= 360) {
+      angle = angle % 360
+    }
+  
+    // 角度をラジアンに直す
+    let startRad = startAngle * Math.PI / 180
+    let rad = (startAngle + angle) * Math.PI / 180
+  
+    // 円弧始点の座標
+    // 極座標: x = r * cosΘ, y = - r * sinΘ
+    // HTML上はY軸は↓方向なので符号注意
+    let x1 = (Math.cos(startRad) * radius + x0)
+    let y1 = (- Math.sin(startRad) * radius + y0)
+  
+    // 円弧の半径(正円なのでxもyも同じ)
+    let rx = radius
+    let ry = radius
+  
+    // x-axis-rotation(正円なので0固定)
+    let start = 0
+  
+    // large-arc-flag
+    // 0: 180度以内、1: 180度以上
+    let f1 = 0
+    if (Math.PI <= Math.abs(rad - startRad)) {
+      f1 = 1
+    }
+  
+    // sweep-flag
+    // 0: 反時計回り、1: 時計回り
+    let f2 = 0
+    if (angle < 0) {
+      f2 = 1
+    }
+  
+    // 円弧終点の座標
+    // 極座標: x = r * cosΘ, y = - r * sinΘ
+    // HTML上はY軸は↓方向なので符号注意
+    let x2 = x0 + (Math.cos(rad) * radius)
+    let y2 = y0 + (- Math.sin(rad) * radius)
+  
+    // SVGのパス要素に反映
+    svg.setAttribute('d', `M ${x1} ${y1} A ${rx} ${ry} ${start} ${f1} ${f2} ${x2} ${y2}`);
+  }
+  
+  // ↑↑コピペここまで↑↑
+  
+  
+// 各種変数の定義
+let svg; // SVGの<path>要素
+let radius; // 円の半径
+let x0; // 円の中心のx座標
+let y0; // 円の中心のy座標
+let startAngle; // 円弧始点の角度
+let currentAngle; // 円弧の初期角度
+let endAngle; // 円弧の最終角度
+
+let isCompleted_1 = false;
+let isCompleted_2 = false;
+let isCompleted_3 = false;
+let isCompleted_4 = false;
+let isCompleted_5 = false;
+let isCompleted_6 = false;
+let isCompleted_7 = false;
+
+function setParam() {
+  
+  if (!isCompleted_1) {
+    svg = document.getElementById("myArc1");
+    radius = 210;
+    x0 = 230;
+    y0 = 230;
+    startAngle = 180;
+    currentAngle = 0;
+    endAngle = -90;
+
+    isCompleted_1 = true;
+
+  } else if (!isCompleted_2) {
+    svg = document.getElementById("myArc2");
+    radius = 130;
+    x0 = 230;
+    y0 = 150;
+    startAngle = 90;
+    currentAngle = 0;
+    endAngle = -90;
+
+    isCompleted_2 = true;
+
+  } else if (!isCompleted_3) {
+    svg = document.getElementById("myArc3");
+    radius = 80;
+    x0 = 280;
+    y0 = 150;
+    startAngle = 0;
+    currentAngle = 0;
+    endAngle = -90;
+
+    isCompleted_3 = true;
+
+  } else if (!isCompleted_4) {
+    svg = document.getElementById("myArc4");
+    radius = 50;
+    x0 = 280;
+    y0 = 180;
+    startAngle = 270;
+    currentAngle = 0;
+    endAngle = -90;
+
+    isCompleted_4 = true;
+
+  } else if (!isCompleted_5) {
+    svg = document.getElementById("myArc5");
+    radius = 30;
+    x0 = 260;
+    y0 = 180;
+    startAngle = 180;
+    currentAngle = 0;
+    endAngle = -90;
+
+    isCompleted_5 = true;
+
+  } else if (!isCompleted_6) {
+    svg = document.getElementById("myArc6");
+    radius = 20;
+    x0 = 260;
+    y0 = 170;
+    startAngle = 90;
+    currentAngle = 0;
+    endAngle = -90;
+
+    isCompleted_6 = true;
+
+  } else if (!isCompleted_7) {
+    svg = document.getElementById("myArc7");
+    radius = 10;
+    x0 = 270;
+    y0 = 170;
+    startAngle = 0;
+    currentAngle = 0;
+    endAngle = -180;
+
+    isCompleted_7 = true;
+
+  }
+}
+
+// アニメーションを描画する関数
+function draw() {
+  // 円弧描画の関数呼び出し
+  drawArc(svg, radius, x0, y0, startAngle, currentAngle);
+  // 円弧の角度更新(+で反時計回り、-で時計回りの円弧)
+  currentAngle = currentAngle - 5;
+
+  if(currentAngle === endAngle -5) {
+    if(isCompleted_7){
+      return;
+    }
+    setParam();
+  }
+
+  requestAnimationFrame(draw);
+}
+
+setParam();
+draw();
+  </script>
+</html>
