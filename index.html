@@ -195,9 +195,9 @@ function draw() {
   // 円弧描画の関数呼び出し
   drawArc(svg, radius, x0, y0, startAngle, currentAngle);
   // 円弧の角度更新(+で反時計回り、-で時計回りの円弧)
-  currentAngle = currentAngle - 5;
+  currentAngle = currentAngle - 2;
 
-  if(currentAngle === endAngle -5) {
+  if(currentAngle === endAngle -2) {
     if(isCompleted_7){
       return;
     }
